@@ -30,7 +30,7 @@ import lombok.Setter;
  *
  */
 
-@Getter 
+@Getter
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -64,5 +64,5 @@ public class Login implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "cliente_id")
-	private Cliente cliente;
+	private Cliente clienteLogin;
 }

@@ -4,6 +4,7 @@
 package com.spring.boot.banco.digital.util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.spring.boot.banco.digital.enums.SexoCliente;
+import com.spring.boot.banco.digital.enums.TipoCliente;
 import com.spring.boot.banco.digital.enums.UnidadeFederacao;
 import com.spring.boot.banco.digital.model.Cliente;
 import com.spring.boot.banco.digital.model.DocumentoCliente;
@@ -31,7 +33,7 @@ public class DummyData {
 	@Autowired
 	DocumentoRepository documentoRepository;
 
-	//@PostConstruct
+	@PostConstruct
 	public void savePosts() {
 
 		List<Cliente> clienteList = new ArrayList<>();
@@ -107,21 +109,20 @@ public class DummyData {
 
 		}
 
-	}
-
-	//@PostConstruct
-	public void saveDocs() {
-
 		List<DocumentoCliente> documentoClienteList = new ArrayList<>();
 
 		DocumentoCliente documentoCliente1 = new DocumentoCliente();
+		documentoCliente1.setTipoCliente(TipoCliente.FISICA);
 		documentoCliente1.setCpfCnpjCliente("28621983079");
 		documentoCliente1.setNaturalidadeRgCliente("Bahia");
 		documentoCliente1.setNomeMaeRgCliente("Maria Claudia Castro");
 		documentoCliente1.setNomePaiRgCliente("Jose Carlos Castro");
 		documentoCliente1.setNumeroRgCliente("160151065");
+		documentoCliente1.setDataExpedicaoRgCliente(new Date(15031999));
+		documentoCliente1.setDataNascimentoRgCliente(new Date(12345678));
 		documentoCliente1.setOrgaoEmissorRgCliente("ssp");
 		documentoCliente1.setUfRgCliente(UnidadeFederacao.SAO_PAULO);
+		documentoCliente1.setClienteDocumento(cliente1);
 
 		documentoClienteList.add(documentoCliente1);
 

@@ -13,8 +13,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -60,7 +61,7 @@ public class DocumentoCliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_DOCUMENTO_CLIENTE", updatable = false, nullable = false)
 	private Long idDocumentoCliente;
-	
+
 	@NotNull
 	@Column(name = "TIPO_CLIENTE", nullable = false, length = 10)
 	@Enumerated(EnumType.STRING)
@@ -107,4 +108,7 @@ public class DocumentoCliente implements Serializable {
 	@Column(name = "CPF_CNPJ_CLIENTE", unique = true, nullable = false, length = 14)
 	private String cpfCnpjCliente;
 
+	@OneToOne
+	@JoinColumn(name = "cliente_id")
+	private Cliente clienteDocumento;
 }

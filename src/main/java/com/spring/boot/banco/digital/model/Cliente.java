@@ -6,13 +6,18 @@ package com.spring.boot.banco.digital.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -24,7 +29,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.spring.boot.banco.digital.enums.SexoCliente;
 
 import jdk.jfr.BooleanFlag;
-import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,7 +40,7 @@ import lombok.Setter;
  *
  */
 
-@Getter 
+@Getter
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -63,7 +67,7 @@ public class Cliente implements Serializable {
 	@NotBlank(message = "Sobrenome não foi informado")
 	@Column(name = "SOBRENOME_CLIENTE", nullable = false, length = 50)
 	private String sobrenomeCliente;
-	
+
 	@NotNull(message = "Sexo do cliente é obrigatório")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "SEXO_CLIENTE", nullable = false, length = 9)
@@ -87,7 +91,16 @@ public class Cliente implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date dataAlteracaoCliente = new java.util.Date(System.currentTimeMillis());
 
-	@OneToOne(mappedBy = "cliente")
+	@OneToOne(mappedBy = "clienteLogin")
 	private Login login;
-	
+
+	@OneToOne(mappedBy = "clienteDocumento")
+	private DocumentoCliente documentoCliente;
+
+	@OneToOne(mappedBy = "clienteEnderecos", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Endereco listClienteEndereco;
+
+	@OneToOne(mappedBy = "clienteTelefone" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Telefone listClienteTelefone;
+
 }
