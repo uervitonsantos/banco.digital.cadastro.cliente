@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.spring.boot.banco.digital.enums.UnidadeFederacao;
@@ -67,5 +68,7 @@ public class Endereco implements Serializable {
 
 	@Column(name = "CEP_ENDERECO", nullable = false, length = 8)
 	private int cepEndereco;
+	
+	private Cliente cliente;
 
 }
