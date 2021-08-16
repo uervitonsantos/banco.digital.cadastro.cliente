@@ -6,16 +6,19 @@ package com.spring.boot.banco.digital.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -24,6 +27,7 @@ import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 import org.hibernate.validator.group.GroupSequenceProvider;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.spring.boot.banco.digital.enums.TipoCliente;
 import com.spring.boot.banco.digital.enums.UnidadeFederacao;
@@ -85,7 +89,7 @@ public class DocumentoCliente implements Serializable {
 	private String naturalidadeRgCliente;
 
 	@Column(name = "DATA_NASCIMNTO_RG_CLIENTE", nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private Date dataNascimentoRgCliente;
 
 	@NotBlank
@@ -99,7 +103,7 @@ public class DocumentoCliente implements Serializable {
 	private String nomePaiRgCliente;
 
 	@Column(name = "DATA_EXPEDICAO_RG_CLIENTE", nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private Date dataExpedicaoRgCliente;
 
 	@CPF(groups = CpfGroup.class)
@@ -108,7 +112,10 @@ public class DocumentoCliente implements Serializable {
 	@Column(name = "CPF_CNPJ_CLIENTE", unique = true, nullable = false, length = 14)
 	private String cpfCnpjCliente;
 
-	@OneToOne
+	@Valid
+	@NotBlank
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
+	@JsonBackReference
 	private Cliente clienteDocumento;
 }

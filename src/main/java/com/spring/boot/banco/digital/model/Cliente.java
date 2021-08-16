@@ -15,17 +15,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.spring.boot.banco.digital.enums.SexoCliente;
 
 import jdk.jfr.BooleanFlag;
@@ -91,16 +90,20 @@ public class Cliente implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date dataAlteracaoCliente = new java.util.Date(System.currentTimeMillis());
 
-	@OneToOne(mappedBy = "clienteLogin")
+	@OneToOne(mappedBy = "clienteLogin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private Login login;
 
-	@OneToOne(mappedBy = "clienteDocumento")
+	@OneToOne(mappedBy = "clienteDocumento", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private DocumentoCliente documentoCliente;
 
 	@OneToOne(mappedBy = "clienteEnderecos", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private Endereco listClienteEndereco;
 
-	@OneToOne(mappedBy = "clienteTelefone" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "clienteTelefone", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private Telefone listClienteTelefone;
 
 }

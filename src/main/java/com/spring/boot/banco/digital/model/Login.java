@@ -6,16 +6,20 @@ package com.spring.boot.banco.digital.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -54,7 +58,7 @@ public class Login implements Serializable {
 	private String loginCliente;
 
 	@NotBlank
-	@JsonIgnore
+	//@JsonIgnore
 	@Column(name = "SENHA_CLIENTE", nullable = true, length = 60)
 	private String senhaCliente;
 
@@ -62,7 +66,10 @@ public class Login implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
 	private Date dataAlteracaoSenhaCliente = new java.sql.Date(System.currentTimeMillis());
 
-	@OneToOne
+	@Valid
+	@NotBlank
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
+	@JsonBackReference
 	private Cliente clienteLogin;
 }
