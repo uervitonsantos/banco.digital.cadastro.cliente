@@ -5,7 +5,6 @@ package com.spring.boot.banco.digital.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,8 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.spring.boot.banco.digital.enums.UnidadeFederacao;
@@ -73,12 +70,10 @@ public class Endereco implements Serializable {
 	private UnidadeFederacao ufEndereco;
 
 	@Column(name = "CEP_ENDERECO", nullable = false, length = 8)
-	private int cepEndereco;
+	private String cepEndereco;
 
-	@Valid
-	@NotBlank
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="CLIENTE_ID")
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CLIENTE_ID")
 	@JsonBackReference
 	private Cliente clienteEnderecos;
 

@@ -62,8 +62,7 @@ public class EnderecoService {
 			endereco.setNumeroEndereco(newEndereco.getNumeroEndereco());
 			endereco.setRuaEndereco(newEndereco.getRuaEndereco());
 			endereco.setUfEndereco(newEndereco.getUfEndereco());
-			//endereco.setClienteEnderecos(newEndereco.getClienteEnderecos());
-
+			
 			return enderecoRepository.save(endereco);
 		}).orElseGet(() -> {
 			newEndereco.setIdEndereco(id);

@@ -112,9 +112,7 @@ public class DocumentoCliente implements Serializable {
 	@Column(name = "CPF_CNPJ_CLIENTE", unique = true, nullable = false, length = 14)
 	private String cpfCnpjCliente;
 
-	@Valid
-	@NotBlank
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
 	@JsonBackReference
 	private Cliente clienteDocumento;

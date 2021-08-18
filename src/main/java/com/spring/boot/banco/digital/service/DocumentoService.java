@@ -27,47 +27,48 @@ public class DocumentoService {
 
 	@Autowired
 	private DocumentoRepository documentoRepository;
-	
-	
+
 	public DocumentoCliente salvaDocumentoCliente(@RequestBody @Valid DocumentoCliente documentoCliente) {
 		return documentoRepository.save(documentoCliente);
 
 	}
-	
+
 	public DocumentoCliente buscaDocumentoId(Long id) {
 		return documentoRepository.findById(id).get();
-		
+
 	}
-	
+
 	public List<DocumentoCliente> buscaTodosDocumento() {
 		return documentoRepository.findAll();
-		
+
 	}
-	
-	/*public Cliente atualizarCliente(@RequestBody Cliente newcliente, @PathVariable Long id) {
 
-		return clienteRepository.findById(id).map(cliente -> {
-			cliente.setIdCliente(newcliente.getIdCliente());
-			cliente.setNomeCliente(newcliente.getNomeCliente());
-			cliente.setSobrenomeCliente(newcliente.getSobrenomeCliente());
-			cliente.setSexoCliente(newcliente.getSexoCliente());
-			cliente.setEmailCliente(newcliente.getEmailCliente());
-			cliente.setAtivoCliente(newcliente.isAtivoCliente());
-			cliente.setDataCadastroCliente(newcliente.getDataCadastroCliente());
-			cliente.setDataAlteracaoCliente(newcliente.getDataAlteracaoCliente());
+	public DocumentoCliente atualizarDocumentoCliente(@RequestBody DocumentoCliente newDocumento,
+			@PathVariable Long id) {
 
-			return clienteRepository.save(cliente);
+		return documentoRepository.findById(id).map(documento -> {
+			documento.setIdDocumentoCliente(newDocumento.getIdDocumentoCliente());
+			documento.setTipoCliente(newDocumento.getTipoCliente());
+			documento.setNumeroRgCliente(newDocumento.getNumeroRgCliente());
+			documento.setOrgaoEmissorRgCliente(newDocumento.getOrgaoEmissorRgCliente());
+			documento.setUfRgCliente(newDocumento.getUfRgCliente());
+			documento.setNaturalidadeRgCliente(newDocumento.getNaturalidadeRgCliente());
+			documento.setDataNascimentoRgCliente(newDocumento.getDataNascimentoRgCliente());
+			documento.setNomeMaeRgCliente(newDocumento.getNomeMaeRgCliente());
+			documento.setNomePaiRgCliente(newDocumento.getNumeroRgCliente());
+			documento.setDataExpedicaoRgCliente(newDocumento.getDataExpedicaoRgCliente());
+			documento.setCpfCnpjCliente(newDocumento.getCpfCnpjCliente());
+
+			return documentoRepository.save(documento);
 		}).orElseGet(() -> {
-			newcliente.setIdCliente(id);
-			return clienteRepository.save(newcliente);
+			newDocumento.setIdDocumentoCliente(id);
+			return documentoRepository.save(newDocumento);
 		});
-	}*/
+	}
 
-	
 	public void excluiDocumento(@PathVariable Long id) {
 		documentoRepository.deleteById(id);
 
 	}
 
-	
 }

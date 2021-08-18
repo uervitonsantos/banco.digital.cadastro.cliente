@@ -3,29 +3,26 @@ package com.spring.boot.banco.digital;
 import java.util.Arrays;
 import java.util.Date;
 
-import org.hibernate.type.descriptor.java.ZonedDateTimeJavaDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.format.datetime.joda.LocalDateParser;
-import org.springframework.format.datetime.standard.InstantFormatter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.spring.boot.banco.digital.controller.LoginController;
 import com.spring.boot.banco.digital.enums.SexoCliente;
 import com.spring.boot.banco.digital.enums.TipoCliente;
 import com.spring.boot.banco.digital.enums.UnidadeFederacao;
 import com.spring.boot.banco.digital.model.Cliente;
 import com.spring.boot.banco.digital.model.DocumentoCliente;
+import com.spring.boot.banco.digital.model.Endereco;
 import com.spring.boot.banco.digital.model.Login;
 import com.spring.boot.banco.digital.repository.ClienteRepository;
 import com.spring.boot.banco.digital.repository.DocumentoRepository;
+import com.spring.boot.banco.digital.repository.EnderecoRepository;
 import com.spring.boot.banco.digital.repository.LoginRepository;
-import com.spring.boot.banco.digital.service.LoginService;
+import com.spring.boot.banco.digital.service.EnderecoService;
 
 @SpringBootApplication(exclude = {
 		org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
@@ -37,6 +34,9 @@ public class Application implements CommandLineRunner {
 
 	@Autowired
 	DocumentoRepository documentoRepository;
+
+	@Autowired
+	EnderecoService enderecoService;
 
 	@Autowired
 	LoginRepository loginRepository;
@@ -104,6 +104,31 @@ public class Application implements CommandLineRunner {
 		cliente7.setAtivoCliente(true);
 
 		clienteRepository.saveAll(Arrays.asList(cliente1, cliente2, cliente3, cliente4, cliente5, cliente6, cliente7));
+
+		Endereco endereco1 = new Endereco();
+		endereco1.setRuaEndereco("Rua Amazonas");
+		endereco1.setNumeroEndereco("23");
+		endereco1.setBairroEndereco("Alvorada");
+		endereco1.setMunicipioEndereco("Alvorada");
+		endereco1.setCidadeEndereco("Manaus");
+		endereco1.setEstadoEndereco("AM");
+		endereco1.setUfEndereco(UnidadeFederacao.AMAZONAS);
+		endereco1.setCepEndereco("08566788");
+		endereco1.setClienteEnderecos(cliente1);
+
+		Endereco endereco2 = new Endereco();
+		endereco2.setRuaEndereco("Rua São Paulo");
+		endereco2.setNumeroEndereco("23");
+		endereco2.setBairroEndereco("Osasco");
+		endereco2.setMunicipioEndereco("Centro");
+		endereco2.setCidadeEndereco("Osasco");
+		endereco2.setEstadoEndereco("SP");
+		endereco2.setUfEndereco(UnidadeFederacao.SAO_PAULO);
+		endereco2.setCepEndereco("08566788");
+		endereco2.setClienteEnderecos(cliente2);
+
+		enderecoService.salvaEndereco(endereco1);
+		enderecoService.salvaEndereco(endereco2);
 
 		DocumentoCliente documentoCliente1 = new DocumentoCliente();
 		documentoCliente1.setTipoCliente(TipoCliente.FISICA);

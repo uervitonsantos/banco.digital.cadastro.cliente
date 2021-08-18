@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -55,20 +56,15 @@ public class DocumentoClienteController {
 
 	}
 
-	/*
-	 * // METODO QUE ATUALIZA OS DADOS DOS CLIENTES POR ID. TESTE NO POSTMAN
-	 * 
-	 * @PutMapping("/cliente/{id}")
-	 * 
-	 * @ResponseStatus(HttpStatus.OK) public Cliente atualiza(@RequestBody Cliente
-	 * newCliente, @PathVariable Long id) { return
-	 * clienteService.atualizarCliente(newCliente, id);
-	 * 
-	 * }
-	 */
+	// METODO QUE ATUALIZA OS DADOS DOS CLIENTES POR ID. TESTE NO POSTMAN
+	@PutMapping("/documento/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public DocumentoCliente atualiza(@RequestBody DocumentoCliente newDocumentoCliente, @PathVariable Long id) {
+		return documentoService.atualizarDocumentoCliente(newDocumentoCliente, id);
 
-	// METODO QUE EXCLUI DOS DADOS DO CLIENTE. BUSCA REALIZADA POR Id. TESTE NO
-	// POSTMAN
+	}
+
+	// METODO QUE EXCLUI DOS DADOS DO CLIENTE. BUSCA REALIZADA POR Id. TESTE NO POSTMAN
 	@DeleteMapping("/documento/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteDocumento(@PathVariable Long id) {

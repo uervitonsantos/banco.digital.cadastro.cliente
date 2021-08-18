@@ -1,5 +1,5 @@
 /**
- * 
+ * CLASSE DESENVOLVIDA PARA VALIDAR O TIPO DE CLIENTE DO BANCO, (PESSOA FISICA/JURIDICA)
  */
 package com.spring.boot.banco.digital.service;
 

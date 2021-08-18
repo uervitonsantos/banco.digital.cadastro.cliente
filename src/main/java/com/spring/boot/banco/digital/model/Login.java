@@ -66,9 +66,7 @@ public class Login implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
 	private Date dataAlteracaoSenhaCliente = new java.sql.Date(System.currentTimeMillis());
 
-	@Valid
-	@NotBlank
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
 	@JsonBackReference
 	private Cliente clienteLogin;

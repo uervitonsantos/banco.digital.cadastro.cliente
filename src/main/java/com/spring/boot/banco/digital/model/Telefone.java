@@ -55,9 +55,7 @@ public class Telefone implements Serializable {
 	@Column(name = "COMERCIAL_TELEFONE", nullable = true, length = 12)
 	private String comercialTelefone;
 
-	@Valid
-	@NotBlank
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CLIENTE_ID")
 	@JsonBackReference
 	private Cliente clienteTelefone;

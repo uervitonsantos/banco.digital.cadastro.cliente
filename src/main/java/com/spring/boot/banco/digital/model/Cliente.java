@@ -92,7 +92,7 @@ public class Cliente implements Serializable {
 
 	@OneToOne(mappedBy = "clienteLogin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
-	private Login login;
+	private Login loginCliente;
 
 	@OneToOne(mappedBy = "clienteDocumento", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
@@ -100,10 +100,10 @@ public class Cliente implements Serializable {
 
 	@OneToOne(mappedBy = "clienteEnderecos", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
-	private Endereco listClienteEndereco;
+	private Endereco enderecoCliente;
 
 	@OneToOne(mappedBy = "clienteTelefone", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
-	private Telefone listClienteTelefone;
+	private Telefone telefoneCliente;
 
 }
