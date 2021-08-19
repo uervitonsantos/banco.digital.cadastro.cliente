@@ -1,6 +1,5 @@
 package com.spring.boot.banco.digital;
 
-import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +17,10 @@ import com.spring.boot.banco.digital.model.Cliente;
 import com.spring.boot.banco.digital.model.DocumentoCliente;
 import com.spring.boot.banco.digital.model.Endereco;
 import com.spring.boot.banco.digital.model.Login;
-import com.spring.boot.banco.digital.repository.ClienteRepository;
-import com.spring.boot.banco.digital.repository.DocumentoRepository;
-import com.spring.boot.banco.digital.repository.EnderecoRepository;
-import com.spring.boot.banco.digital.repository.LoginRepository;
+import com.spring.boot.banco.digital.service.ClienteService;
+import com.spring.boot.banco.digital.service.DocumentoService;
 import com.spring.boot.banco.digital.service.EnderecoService;
+import com.spring.boot.banco.digital.service.LoginService;
 
 @SpringBootApplication(exclude = {
 		org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
@@ -30,16 +28,16 @@ import com.spring.boot.banco.digital.service.EnderecoService;
 public class Application implements CommandLineRunner {
 
 	@Autowired
-	ClienteRepository clienteRepository;
+	ClienteService clienteService;
 
 	@Autowired
-	DocumentoRepository documentoRepository;
+	DocumentoService documentoService;
 
 	@Autowired
 	EnderecoService enderecoService;
 
 	@Autowired
-	LoginRepository loginRepository;
+	LoginService loginService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -103,7 +101,13 @@ public class Application implements CommandLineRunner {
 		cliente7.setEmailCliente("carlos.machado@gmail.com");
 		cliente7.setAtivoCliente(true);
 
-		clienteRepository.saveAll(Arrays.asList(cliente1, cliente2, cliente3, cliente4, cliente5, cliente6, cliente7));
+		clienteService.salvaCliente(cliente1);
+		clienteService.salvaCliente(cliente2);
+		clienteService.salvaCliente(cliente3);
+		clienteService.salvaCliente(cliente4);
+		clienteService.salvaCliente(cliente5);
+		clienteService.salvaCliente(cliente6);
+		clienteService.salvaCliente(cliente7);
 
 		Endereco endereco1 = new Endereco();
 		endereco1.setRuaEndereco("Rua Amazonas");
@@ -221,8 +225,13 @@ public class Application implements CommandLineRunner {
 		documentoCliente7.setUfRgCliente(UnidadeFederacao.DISTRITO_FEDERAL);
 		documentoCliente7.setClienteDocumento(cliente7);
 
-		documentoRepository.saveAll(Arrays.asList(documentoCliente1, documentoCliente2, documentoCliente3,
-				documentoCliente4, documentoCliente5, documentoCliente6, documentoCliente7));
+		documentoService.salvaDocumentoCliente(documentoCliente1);
+		documentoService.salvaDocumentoCliente(documentoCliente2);
+		documentoService.salvaDocumentoCliente(documentoCliente3);
+		documentoService.salvaDocumentoCliente(documentoCliente4);
+		documentoService.salvaDocumentoCliente(documentoCliente5);
+		documentoService.salvaDocumentoCliente(documentoCliente6);
+		documentoService.salvaDocumentoCliente(documentoCliente7);
 
 		Login login1 = new Login();
 		login1.setLoginCliente("User1");
@@ -259,7 +268,13 @@ public class Application implements CommandLineRunner {
 		login7.setSenhaCliente("qwertyuiop");
 		login7.setClienteLogin(cliente7);
 
-		loginRepository.saveAll(Arrays.asList(login1, login2, login3, login4, login5, login6, login7));
+		loginService.savedByLogin(login1);
+		loginService.savedByLogin(login2);
+		loginService.savedByLogin(login3);
+		loginService.savedByLogin(login4);
+		loginService.savedByLogin(login5);
+		loginService.savedByLogin(login6);
+		loginService.savedByLogin(login7);
 
 	}
 
