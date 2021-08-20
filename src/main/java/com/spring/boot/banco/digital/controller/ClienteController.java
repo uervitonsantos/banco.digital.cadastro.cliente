@@ -29,11 +29,10 @@ import com.spring.boot.banco.digital.service.ClienteService;
 @RestController
 @RequestMapping("/api")
 public class ClienteController {
-	
+
 	@Autowired
 	private ClienteService clienteService;
 
-	
 	// METODO QUE LISTA TODOS OS CLIENTES. TESTE NO POSTMAN
 	@GetMapping(value = "/cliente/list")
 	@ResponseStatus(HttpStatus.OK)
@@ -65,14 +64,13 @@ public class ClienteController {
 
 	}
 
-	// METODO QUE EXCLUI DOS DADOS DO CLIENTE. BUSCA REALIZADA POR Id. TESTE NO POSTMAN
+	// METODO QUE EXCLUI DOS DADOS DO CLIENTE. BUSCA REALIZADA POR Id. TESTE NO
+	// POSTMAN
 	@DeleteMapping("/cliente/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteUser(@PathVariable Long id) {
 		clienteService.excluiCliente(id);
 
 	}
-	
-	
 
 }
