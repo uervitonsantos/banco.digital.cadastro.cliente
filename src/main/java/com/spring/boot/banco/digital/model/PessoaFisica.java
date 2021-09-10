@@ -27,6 +27,7 @@ import org.hibernate.validator.group.GroupSequenceProvider;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.spring.boot.banco.digital.enums.SexoCliente;
 import com.spring.boot.banco.digital.enums.TipoCliente;
 import com.spring.boot.banco.digital.enums.UnidadeFederacao;
 import com.spring.boot.banco.digital.interfaces.CnpjGroup;
@@ -46,28 +47,27 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "DOCUMENTO_CLIENTE")
 @GroupSequenceProvider(ClienteGroupSequenceProvider.class)
-public class DocumentoCliente implements Serializable {
+public class PessoaFisica extends Cliente implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_DOCUMENTO_CLIENTE", updatable = false, nullable = false)
-	private Long idDocumentoCliente;
+	
+	@NotBlank(message = "Sobrenome não foi informado")
+	@Column(name = "SOBRENOME_CLIENTE", nullable = false, length = 50)
+	private String sobrenomeCliente;
 
-	@NotNull
-	@Column(name = "TIPO_CLIENTE", nullable = false, length = 10)
+	@NotNull(message = "Sexo do cliente é obrigatório")
 	@Enumerated(EnumType.STRING)
-	private TipoCliente tipoCliente;
+	@Column(name = "SEXO_CLIENTE", nullable = false, length = 9)
+	private SexoCliente sexoCliente;
 
 	@NotBlank
 	@Column(name = "NUMERO_RG_CLIENTE", unique = true, nullable = false, length = 11)
@@ -86,7 +86,7 @@ public class DocumentoCliente implements Serializable {
 	@Column(name = "NATURALIDADE_RG_CLIENTE", nullable = false, length = 13)
 	private String naturalidadeRgCliente;
 
-	@Column(name = "DATA_NASCIMNTO_RG_CLIENTE", nullable = false)
+	@Column(name = "DATA_NASCIMENTO_RG_CLIENTE", nullable = false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private Date dataNascimentoRgCliente;
 
@@ -104,14 +104,5 @@ public class DocumentoCliente implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private Date dataExpedicaoRgCliente;
 
-	@CPF(groups = CpfGroup.class)
-	@CNPJ(groups = CnpjGroup.class)
-	@NotBlank(message = "CPF/CNPJ é obrigatório")
-	@Column(name = "CPF_CNPJ_CLIENTE", unique = true, nullable = false, length = 14)
-	private String cpfCnpjCliente;
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cliente_id")
-	@JsonBackReference
-	private Cliente clienteDocumento;
+	
 }

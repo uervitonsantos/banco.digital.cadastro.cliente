@@ -8,28 +8,28 @@ import java.util.List;
 
 import org.hibernate.validator.spi.group.DefaultGroupSequenceProvider;
 
-import com.spring.boot.banco.digital.model.DocumentoCliente;
+import com.spring.boot.banco.digital.model.Cliente;
 
 /**
  * @author uerviton-santos
  *
  */
-public class ClienteGroupSequenceProvider implements DefaultGroupSequenceProvider<DocumentoCliente>{
+public class ClienteGroupSequenceProvider implements DefaultGroupSequenceProvider<Cliente>{
 
 	@Override
-	public List<Class<?>> getValidationGroups(DocumentoCliente documentoCliente) {
+	public List<Class<?>> getValidationGroups(Cliente cliente) {
 
 		List<Class<?>> groups = new ArrayList<>();
-		groups.add(DocumentoCliente.class);
+		groups.add(Cliente.class);
 		
-		if (isPessoaSelecionada(documentoCliente)) {
-			groups.add(documentoCliente.getTipoCliente().getGroup());
+		if (isPessoaSelecionada(cliente)) {
+			groups.add(cliente.getTipoCliente().getGroup());
 		}
 		return groups;
 	}
 
-	private boolean isPessoaSelecionada(DocumentoCliente documentoCliente) {
-		return documentoCliente != null && documentoCliente.getTipoCliente() != null;
+	private boolean isPessoaSelecionada(Cliente cliente) {
+		return cliente != null && cliente.getTipoCliente() != null;
 	}
 
 }

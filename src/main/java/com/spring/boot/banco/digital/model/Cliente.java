@@ -8,6 +8,7 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,6 +16,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -22,9 +25,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.spring.boot.banco.digital.enums.SexoCliente;
+import com.spring.boot.banco.digital.enums.TipoCliente;
+import com.spring.boot.banco.digital.interfaces.CnpjGroup;
+import com.spring.boot.banco.digital.interfaces.CpfGroup;
 
 import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
@@ -45,7 +54,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "CLIENTE")
-public class Cliente implements Serializable {
+@DiscriminatorColumn(name = "CLIENTE_TIPO")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Cliente implements Serializable {
 
 	/**
 	 * 
@@ -62,25 +73,11 @@ public class Cliente implements Serializable {
 	@Column(name = "NOME_CLIENTE", nullable = false, length = 50)
 	private String nomeCliente;
 
-	@NotBlank(message = "Sobrenome não foi informado")
-	@Column(name = "SOBRENOME_CLIENTE", nullable = false, length = 50)
-	private String sobrenomeCliente;
-
-	@NotNull(message = "Sexo do cliente é obrigatório")
-	@Enumerated(EnumType.STRING)
-	@Column(name = "SEXO_CLIENTE", nullable = false, length = 9)
-	private SexoCliente sexoCliente;
-
 	@NotBlank(message = "Email não foi informado")
 	@Email(message = "Campo inválido")
 	@Column(name = "EMAIL_CLIENTE", unique = true, nullable = false, length = 50)
 	private String emailCliente;
-
-	@NotNull(message = "Status do cliente é obrigatório")
-	@BooleanFlag
-	@Column(name = "ATIVO_CLIENTE", nullable = false, length = 5)
-	private boolean ativoCliente;
-
+	
 	@Column(name = "DATA_CADASTRO_CLIENTE", nullable = false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date dataCadastroCliente = new java.util.Date();
@@ -88,15 +85,28 @@ public class Cliente implements Serializable {
 	@Column(name = "DATA_ALTERACAO_CLIENTE", nullable = false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date dataAlteracaoCliente = new java.util.Date(System.currentTimeMillis());
+	
+	@CPF(groups = CpfGroup.class)
+	@NotBlank(message = "CPF é obrigatório")
+	@Column(name = "CPF", unique = true, nullable = false, length = 14)
+	private String CPF;
+
+	@NotNull(message = "Status do cliente é obrigatório")
+	@BooleanFlag
+	@Column(name = "ATIVO_CLIENTE", nullable = false, length = 5)
+	private boolean ativoCliente;
+	
+	@NotNull
+	@Column(name = "TIPO_CLIENTE", nullable = false, length = 10)
+	@Enumerated(EnumType.STRING)
+	private TipoCliente tipoCliente;
+
+	
 
 	@OneToOne(mappedBy = "clienteLogin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private Login loginCliente;
-
-	@OneToOne(mappedBy = "clienteDocumento", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonManagedReference
-	private DocumentoCliente documentoCliente;
-
+	
 	@OneToOne(mappedBy = "clienteEnderecos", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private Endereco enderecoCliente;

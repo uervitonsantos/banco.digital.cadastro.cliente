@@ -14,12 +14,11 @@ import com.spring.boot.banco.digital.enums.SexoCliente;
 import com.spring.boot.banco.digital.enums.TipoCliente;
 import com.spring.boot.banco.digital.enums.UnidadeFederacao;
 import com.spring.boot.banco.digital.model.Cliente;
-import com.spring.boot.banco.digital.model.DocumentoCliente;
+import com.spring.boot.banco.digital.model.PessoaFisica;
 import com.spring.boot.banco.digital.model.Endereco;
 import com.spring.boot.banco.digital.model.Login;
 import com.spring.boot.banco.digital.model.Telefone;
 import com.spring.boot.banco.digital.service.ClienteService;
-import com.spring.boot.banco.digital.service.DocumentoService;
 import com.spring.boot.banco.digital.service.EnderecoService;
 import com.spring.boot.banco.digital.service.LoginService;
 import com.spring.boot.banco.digital.service.TelefoneService;
@@ -29,19 +28,19 @@ import com.spring.boot.banco.digital.service.TelefoneService;
 		org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class })
 public class Application implements CommandLineRunner {
 
-	@Autowired
+	//@Autowired
 	ClienteService clienteService;
 
-	@Autowired
-	DocumentoService documentoService;
+	//@Autowired
+	//DocumentoService documentoService;
 
-	@Autowired
+	//@Autowired
 	EnderecoService enderecoService;
 
-	@Autowired
+	//@Autowired
 	LoginService loginService;
 
-	@Autowired
+	//@Autowired
 	TelefoneService telefoneService;
 
 	public static void main(String[] args) {
@@ -57,6 +56,7 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		
 		
 		/*
 		 * Cliente cliente1 = new Cliente(); cliente1.setNomeCliente("Pedro");

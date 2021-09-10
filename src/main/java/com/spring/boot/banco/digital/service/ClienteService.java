@@ -57,8 +57,6 @@ public class ClienteService {
 		return clienteRepository.findById(id).map(cliente -> {
 			cliente.setIdCliente(newcliente.getIdCliente());
 			cliente.setNomeCliente(newcliente.getNomeCliente());
-			cliente.setSobrenomeCliente(newcliente.getSobrenomeCliente());
-			cliente.setSexoCliente(newcliente.getSexoCliente());
 			cliente.setEmailCliente(newcliente.getEmailCliente());
 			cliente.setAtivoCliente(newcliente.isAtivoCliente());
 			cliente.setDataCadastroCliente(newcliente.getDataCadastroCliente());
