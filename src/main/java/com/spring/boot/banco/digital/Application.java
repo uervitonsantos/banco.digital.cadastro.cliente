@@ -27,16 +27,16 @@ import com.spring.boot.banco.digital.service.TelefoneService;
 		org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class })
 public class Application implements CommandLineRunner {
 
-	@Autowired
+	//@Autowired
 	ClienteService clienteService;
 
-	@Autowired
+	//@Autowired
 	EnderecoService enderecoService;
 
-	@Autowired
+	//@Autowired
 	LoginService loginService;
 
-	@Autowired
+	//@Autowired
 	TelefoneService telefoneService;
 
 	public static void main(String[] args) {
