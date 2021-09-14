@@ -6,6 +6,7 @@ package com.spring.boot.banco.digital.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,11 +71,11 @@ public class LoginService {
 
 	public ResponseEntity<Boolean> validarSenha(@RequestParam String loginCliente, @RequestParam String senhaCliente) {
 
-		List<Login> optLogin = loginRepository.findByLoginCliente(loginCliente);
+		Optional<Login> optLogin = loginRepository.findByLoginCliente(loginCliente);
 		if (optLogin.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
 		}
-		Login login = optLogin.get(0);
+		Login login = optLogin.get();
 		boolean valid = encoder.matches(senhaCliente, login.getSenhaCliente());
 
 		HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;

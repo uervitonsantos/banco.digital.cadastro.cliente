@@ -33,12 +33,14 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 
-	// METODO QUE LISTA TODOS OS CLIENTES. TESTE NO POSTMAN
-	@GetMapping(value = "/login/list")
-	@ResponseStatus(HttpStatus.OK)
-	public List<Login> listar() {
-		return loginService.findAllByLogin();
-	}
+	/*
+	 * // METODO QUE LISTA TODOS OS CLIENTES. TESTE NO POSTMAN
+	 * 
+	 * @GetMapping(value = "/login/list")
+	 * 
+	 * @ResponseStatus(HttpStatus.OK) public List<Login> listar() { return
+	 * loginService.findAllByLogin(); }
+	 */
 
 	// METODO QUE SALVA O LOGIM DOS CLIENTES. TESTE NO POSTMAN
 	@PostMapping("/login")
@@ -55,15 +57,18 @@ public class LoginController {
 
 	}
 
-	// METODO QUE EXCLUI A SENHA DO CLIENTE. BUSCA REALIZADA POR Id. TESTE NO
-	// POSTMAN
-	@DeleteMapping("/login/{id}")
-	@ResponseStatus(HttpStatus.OK)
-	public void deleteLogin(@PathVariable Long id) {
-		loginService.excluiLogin(id);
-
-	}
-
+	/*
+	 * // METODO QUE EXCLUI A SENHA DO CLIENTE. BUSCA REALIZADA POR Id. TESTE NO //
+	 * POSTMAN
+	 * 
+	 * @DeleteMapping("/login/{id}")
+	 * 
+	 * @ResponseStatus(HttpStatus.OK) public void deleteLogin(@PathVariable Long id)
+	 * { loginService.excluiLogin(id);
+	 * 
+	 * }
+	 */
+	
 	// METODO QUE VALIDA O LOGIM DOS CLIENTES NO BANCO. TESTE NO POSTMAN
 	@GetMapping(value = "/validar")
 	public ResponseEntity<Boolean> validar(@RequestParam String loginCliente, @RequestParam String senhaCliente) {
