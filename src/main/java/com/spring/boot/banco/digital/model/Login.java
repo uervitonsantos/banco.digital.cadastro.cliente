@@ -19,6 +19,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -55,7 +56,7 @@ public class Login implements Serializable {
 	private String loginCliente;
 
 	@NotBlank
-	//@JsonIgnore
+	@JsonIgnore
 	@Column(name = "SENHA_CLIENTE", nullable = true, length = 60)
 	private String senhaCliente;
 

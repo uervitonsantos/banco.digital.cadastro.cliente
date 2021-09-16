@@ -28,45 +28,52 @@ import com.spring.boot.banco.digital.model.Login;
  * @author uerviton-santos
  *
  */
+
 public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 
-	public static final int TOKEN_EXPIRACAO = 600_000;
-	public static final String TOKEN_SENHA = "463408a1-54c9-4307-bb1c-6cced559f5a7";
+    public static final int TOKEN_EXPIRACAO = 600_000;
+    public static final String TOKEN_SENHA = "463408a1-54c9-4307-bb1c-6cced559f5a7";
 
-	private final AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-	public JWTAutenticarFilter(AuthenticationManager authenticationManager) {
-		this.authenticationManager = authenticationManager;
-	}
+    public JWTAutenticarFilter(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
 
-	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException {
 
-		try {
-			Login login = new ObjectMapper().readValue(request.getInputStream(), Login.class);
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request,
+                                                HttpServletResponse response) throws AuthenticationException {
+        try {
+            Login usuario = new ObjectMapper()
+                    .readValue(request.getInputStream(), Login.class);
 
-			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getClienteLogin(),
-					login.getSenhaCliente(), new ArrayList<>()));
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    usuario.getLoginCliente(),
+                    usuario.getSenhaCliente(),
+                    new ArrayList<>()
+            ));
 
-		} catch (IOException e) {
-			throw new RuntimeException("Falha ao autenticar usuario", e);
-		}
-	}
+        } catch (IOException e) {
+            throw new RuntimeException("Falha ao autenticar usuario", e);
+        }
 
-	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-			Authentication authResult) throws IOException, ServletException {
+    }
 
-		DetalheUsuarioData usuarioData = (DetalheUsuarioData) authResult.getPrincipal();
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain chain,
+                                            Authentication authResult) throws IOException, ServletException {
 
-		String token = JWT.create().withSubject(usuarioData.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRACAO))
-				.sign(Algorithm.HMAC512(TOKEN_SENHA));
+        DetalheUsuarioData usuarioData = (DetalheUsuarioData) authResult.getPrincipal();
 
-		response.getWriter().write(token);
-		response.getWriter().flush();
+        String token = JWT.create().
+                withSubject(usuarioData.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRACAO))
+                .sign(Algorithm.HMAC512(TOKEN_SENHA));
 
-	}
-
+        response.getWriter().write(token);
+        response.getWriter().flush();
+    }
 }

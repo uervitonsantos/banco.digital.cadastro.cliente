@@ -1,5 +1,7 @@
 package com.spring.boot.banco.digital;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -8,6 +10,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.spring.boot.banco.digital.enums.SexoCliente;
+import com.spring.boot.banco.digital.enums.TipoCliente;
+import com.spring.boot.banco.digital.enums.UnidadeFederacao;
+import com.spring.boot.banco.digital.model.Endereco;
+import com.spring.boot.banco.digital.model.Login;
+import com.spring.boot.banco.digital.model.PessoaFisica;
+import com.spring.boot.banco.digital.model.Telefone;
 import com.spring.boot.banco.digital.service.ClienteService;
 import com.spring.boot.banco.digital.service.EnderecoService;
 import com.spring.boot.banco.digital.service.LoginService;
@@ -41,6 +50,7 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		
 		/*
 		 * PessoaFisica cliente1 = new PessoaFisica();
 		 * cliente1.setNomeCliente("Carlos"); cliente1.setSobrenomeCliente("Machado");
@@ -70,9 +80,8 @@ public class Application implements CommandLineRunner {
 		 * 
 		 * enderecoService.salvaEndereco(endereco1);
 		 * 
-		 * Login login1 = new Login(); 
-		 * login1.setLoginCliente("User1");
-		 * login1.setSenhaCliente("qwertyuiop"); 
+		 * Login login1 = new Login(); login1.setLoginCliente("User1");
+		 * login1.setSenhaCliente("qwertyuiop");
 		 * 
 		 * login1.setClienteLogin(cliente1);
 		 * 
@@ -86,6 +95,7 @@ public class Application implements CommandLineRunner {
 		 * 
 		 * telefoneService.salvaTelefone(telefone1);
 		 */
+		 
 	}
 
 }
